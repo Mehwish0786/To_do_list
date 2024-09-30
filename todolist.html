@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo List with Add Task Feature</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Lato:400,400i,700");
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #9e96df;
+            margin: 0;
+            font-family: Lato, sans-serif;
+        }
+
+        .todo-list {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #162740;
+            border-radius: 10px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .todo-list__title {
+            padding: 10px;
+            color: #f1faee;
+            background-color: #264456;
+            text-align: center;
+            font-size: 1.5em;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .todo-list__label {
+            display: flex;
+            align-items: center;
+            position: relative;
+            font-size: 1.2em;
+            color: #f1faee;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .todo-list__label input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .todo-list__label .check {
+            position: relative;
+            width: 25px;
+            height: 25px;
+            border: 2px solid #f1faee;
+            border-radius: 4px;
+            transition: 0.2s;
+            margin-right: 15px;
+        }
+
+        .todo-list__label input[type="checkbox"]:checked + .check {
+            background-color: #f1faee;
+            border-color: #f1faee;
+        }
+
+        .todo-list__label .check::after {
+            content: "";
+            position: absolute;
+            display: none;
+            left: 8px;
+            top: 4px;
+            width: 8px;
+            height: 16px;
+            border: solid #162740;
+            border-width: 0 3px 3px 0;
+            transform: rotate(45deg);
+        }
+
+        .todo-list__label input[type="checkbox"]:checked + .check::after {
+            display: block;
+        }
+
+        .todo-list__label span {
+            transition: 0.3s;
+        }
+
+        .todo-list__label input[type="checkbox"]:checked ~ span {
+            color: #585b57;
+            text-decoration: line-through;
+        }
+
+        .add-task-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .add-task-input {
+            font-size: 1.2em;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #264456;
+            width: 100%;
+            margin-right: 10px;
+        }
+
+        .add-task-button {
+            padding: 10px 20px;
+            font-size: 1em;
+            color: #f1faee;
+            background-color: #264456;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-task-button:hover {
+            background-color: #f1faee;
+            color: #264456;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <fieldset class="todo-list">
+            <legend class="todo-list__title">Todo List</legend>
+
+            <div id="task-container">
+                <label class="todo-list__label">
+                    <input type="checkbox" name="task1" id="task1" />
+                    <div class="check"></div>
+                    <span>Attend meeting</span>
+                </label>
+
+                <label class="todo-list__label">
+                    <input type="checkbox" name="task2" id="task2" />
+                    <div class="check"></div>
+                    <span>Complete Assignment</span>
+                </label>
+
+                <label class="todo-list__label">
+                    <input type="checkbox" name="task3" id="task3" />
+                    <div class="check"></div>
+                    <span>Finish design for new website</span>
+                </label>
+
+                <label class="todo-list__label">
+                    <input type="checkbox" name="task4" id="task4" />
+                    <div class="check"></div>
+                    <span>Go to gym</span>
+                </label>
+            </div>
+
+            <div class="add-task-container">
+                <input type="text" class="add-task-input" id="new-task-input" placeholder="Type your next task here">
+                <button type="button" class="add-task-button" onclick="addTask()">Add Task</button>
+            </div>
+        </fieldset>
+    </form>
+
+    <script>
+        function addTask() {
+            // Get the new task input value
+            var newTaskText = document.getElementById('new-task-input').value;
+            if (newTaskText === "") {
+                alert("Please enter a task.");
+                return;
+            }
+
+            // Create a new task label
+            var newLabel = document.createElement('label');
+            newLabel.className = "todo-list__label";
+
+            // Add checkbox input
+            var newCheckbox = document.createElement('input');
+            newCheckbox.type = "checkbox";
+            newCheckbox.name = "task";
+            newLabel.appendChild(newCheckbox);
+
+            // Add custom checkbox div
+            var newCheckDiv = document.createElement('div');
+            newCheckDiv.className = "check";
+            newLabel.appendChild(newCheckDiv);
+
+            // Add the task text
+            var newSpan = document.createElement('span');
+            newSpan.textContent = newTaskText;
+            newLabel.appendChild(newSpan);
+
+            // Add the new label to the task container
+            document.getElementById('task-container').appendChild(newLabel);
+
+            // Clear the input field
+            document.getElementById('new-task-input').value = "";
+        }
+    </script>
+</body>
+</html>
